@@ -17,17 +17,17 @@ Crawler Based Java
 ##重要JAVA文件目录信息
 
 * src
-	* Zhihu
+	* Crawler
 		* AbstractCrawler
 		* DefaultCrawler
-		* ZhihuCralwer
-		* main
+		* Generator
 	* util
 		* Queuecolletion
 		* AddOnlyColletion
-		* URLmanager
-		* URLQueueManager
-
+		* SQLBufferedQueuecolletion
+		* SQLBufferedAddOnlyColletion
+	* example
+		* ZhihuCralwer
 ##结语
 希望有兴趣的人和我联系，共同进步。
 Email：anonymousXY@163.com
