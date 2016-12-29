@@ -8,22 +8,26 @@ Crawler Based Java
 * 本系统基于JAVA系统库
 * 运行环境JRE为1.8.0_31-b3
 * 采用JAVA hotSpot 64-Bit VM，版本25.31-b7
+
 ##系统架构
 本系统为层级架构，可以方便的对系统进行扩展。
 * 架构类图
-![](https://github.com/Adventure1995/Crawler/raw/master/doc/img/ClassUML.jpg"类关系图")
+![](https://github.com/Adventure1995/Crawler/raw/master/doc/img/ClassUML.jpg)
+
 ##重要JAVA文件目录信息
+
 * src
-  * Zhihu
-    * AbstractCrawler
-    * DefaultCrawler
-    * ZhihuCralwer
-    * main
-  * util
-    * Queuecolletion
-    * AddOnlyColletion
-    * URLmanager
-    * URLQueueManager
+* 	Zhihu
+* 	AbstractCrawler
+* 	DefaultCrawler
+* 	ZhihuCralwer
+* 	main
+* util
+* 	Queuecolletion
+* 	AddOnlyColletion
+* 	URLmanager
+* 	URLQueueManager
+
 ##结语
 希望有兴趣的人和我联系，共同进步。
 Email：anonymousXY@163.com
