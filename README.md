@@ -12,21 +12,21 @@ Crawler Based Java
 ##系统架构
 本系统为层级架构，可以方便的对系统进行扩展。
 * 架构类图
-![](https://github.com/Adventure1995/Crawler/tree/master/doc/img/classUML.jpg)
+![UML类图](https://github.com/Adventure1995/Crawler/tree/master/doc/img/classUML.jpg)
 
 ##重要JAVA文件目录信息
 
 * src
 	* Zhihu
-	* AbstractCrawler
-	* DefaultCrawler
-	* ZhihuCralwer
-	* main
-* util
-	* Queuecolletion
-	* AddOnlyColletion
-	* URLmanager
-	* URLQueueManager
+		* AbstractCrawler
+		* DefaultCrawler
+		* ZhihuCralwer
+		* main
+	* util
+		* Queuecolletion
+		* AddOnlyColletion
+		* URLmanager
+		* URLQueueManager
 
 ##结语
 希望有兴趣的人和我联系，共同进步。
