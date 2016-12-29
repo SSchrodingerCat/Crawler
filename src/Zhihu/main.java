@@ -10,7 +10,7 @@ public class main {
 		ZhihuCalwer defaultCrawler = new ZhihuCalwer("https://www.zhihu.com/people/chen-lan-xiang-76/answers");
 		defaultCrawler.setPageRegex("UserLink-link.+?href=\"(.+?)\">");
 		List<String> list = new ArrayList<String>();
-		list.add(new String("Icon--company>(.+?)<"));
+		list.add(new String("Icon--company.+?div>(.+?)<"));
 		list.add(new String("(Icon--female)"));
 		list.add(new String("(Icon--male)"));
 		defaultCrawler.setResultFilter(list);

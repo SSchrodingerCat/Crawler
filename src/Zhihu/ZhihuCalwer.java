@@ -23,21 +23,25 @@ public class ZhihuCalwer extends DefaultCrawler {
 	public final Object setCrawlerPolicy(String page, List<String> resultRegexList) {
 		// TODO Auto-generated method stub
 		for (String string : resultRegexList) {
-			System.out.println(string);
-			System.out.println(page);
 			Pattern pattern = Pattern.compile(string);
 			Matcher matcher = pattern.matcher(page);
-			Boolean result = matcher.find();
-			System.out.println(result);
-			if (string.contains("Icon--male")) {
-				this.result.addSex("male");
-			} else if (string.contains("Icon--female")) {
-				this.result.addSex("male");
-			} else {
-				this.result.addWork(String.valueOf(result));
+			if (matcher.find()) {
+				if (string.contains("Icon--male")) {
+					this.result.addSex("male");
+				} else if (string.contains("Icon--female")) {
+					this.result.addSex("female");
+				} else {
+					this.result.addWork(matcher.group(1));
+				}
 			}
 		}
 		return null;
+	}
+	
+	public void storeResPolicy(Object result) {
+		System.out.println("男士" + this.result.sex.get("male") + "人|" + "女士" + this.result.sex.get("female") + "人");
+		System.out.println("职业分布:");
+		System.out.println(this.result.work.toString());
 	}
 
 }
@@ -54,7 +58,7 @@ class Result {
 		if (this.work.containsKey(work)) {
 			this.work.replace(work, this.work.get(work) + 1);
 		} else {
-			this.work.put(work, 0);
+			this.work.put(work, 1);
 		}
 	}
 	

@@ -76,7 +76,6 @@ public class DefaultCrawler extends AbstractCrawler {
 				List<String> AllPageURL = getAllPageURL(page, pageRegex);
 				for (String string : AllPageURL) {
 					if (urlManager.add(string)) {
-						System.out.println(string);
 						urlPool.add(string);
 					}
 				}
@@ -141,7 +140,6 @@ public class DefaultCrawler extends AbstractCrawler {
 					String result = matcher.group(1);
 					//String next = "https://" + (new URL(startURL)).getHost() + matcher.group(1) + "/hot";
 					String next = protocol + "://" + host + matcher.group(1) + "/following";
-					System.out.println(next);
 					list.add(next);
 					bool = matcher.find();
 				}
