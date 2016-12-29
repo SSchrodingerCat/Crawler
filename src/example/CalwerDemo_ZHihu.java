@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Zhihu.DefaultCrawler;
+import Crawler.DefaultCrawler;
 
 public class CalwerDemo_ZHihu extends DefaultCrawler {
 	

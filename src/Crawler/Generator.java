@@ -5,7 +5,7 @@
  * @description
  * 		生成器接口，包含next()和hasNext()函数
  */
-package Zhihu;
+package Crawler;
 
 public interface Generator {
 	

@@ -7,7 +7,7 @@
  * 			使用List存放结果
  * 
  */
-package Zhihu;
+package Crawler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
