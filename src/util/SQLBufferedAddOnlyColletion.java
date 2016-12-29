@@ -1,3 +1,12 @@
+/**
+ * adventure
+ * @time 2016/12/28
+ * 
+ * @description
+ * 		实现了AddOnlyColletion接口的类
+ * 		使用SQL作为缓冲
+ * 		适用于大量数据需要记录的情况
+ */
 package util;
 
 import java.sql.Connection;
@@ -6,17 +15,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 
-public class URLManager implements AddOnlyColletion {
+public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 	
-	public static URLManager getInstance() {
-		if (urlManager == null)
-			urlManager = new URLManager();
-		return urlManager;
-	}
-	
-	private URLManager() {
+	public SQLBufferedAddOnlyColletion() {
 		// TODO Auto-generated constructor stub
-		innerURLSet = new HashSet<>();
+		innerSet = new HashSet<>();
 	}
 
 	@Override
@@ -29,11 +32,11 @@ public class URLManager implements AddOnlyColletion {
 		if (checkHasURL((String)object))
 			return false;
 		else {
-			if (innerURLSet.size() < innerURLSetSize)
-				innerURLSet.add((String)object);
+			if (innerSet.size() < innerSetSize)
+				innerSet.add((String)object);
 			else {
-				innerURLSet.remove(replacePolicy());
-				innerURLSet.add((String)object);
+				innerSet.remove(replacePolicy());
+				innerSet.add((String)object);
 			}
 			return true;
 		}
@@ -50,10 +53,10 @@ public class URLManager implements AddOnlyColletion {
 	}
 	
 	private boolean checkHasURL(String url) {
-		if (innerURLSet.contains(url))
+		if (innerSet.contains(url))
 			return true;
 		else {
-			if (innerURLSet.size() < innerURLSetSize) {
+			if (innerSet.size() < innerSetSize) {
 				return false;
 			} else {
 				return false;
@@ -85,12 +88,30 @@ public class URLManager implements AddOnlyColletion {
 		}
 	}
 	
-	private HashSet<String> innerURLSet;
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return size;
+	}
+
+	@Override
+	public Object get(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return (size == 0);
+	}
+	
+	private HashSet<String> innerSet;
 	private Connection connection;
 	private PreparedStatement pds;
-	private int innerURLSetSize;
+	private int innerSetSize;
 	
-	private static URLManager urlManager;
+	private int size;
 	
 	private static final int DEFAULTSIZE = 1000;
 	public static final String url = "jdbc:mysql://127.0.0.1/student";  

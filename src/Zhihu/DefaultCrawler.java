@@ -1,7 +1,10 @@
 /**
  * @author adventure
  * @time 2016/12/28
- * @description 以爬取知乎所有用户数据为例子，继承AbstractCrawler
+ * 
+ * @description
+ * 		实现一个基本的爬虫程序，包括一个带缓冲的页面生成器，可更改页面URL选择表达式
+ * 			使用List存放结果
  * 
  */
 package Zhihu;
@@ -16,8 +19,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import util.QueueColleciton;
-import util.URLManager;
-import util.URLQueueManager;
+import util.SQLBufferedAddOnlyColletion;
+import util.SQLBufferedQueueCollection;
 
 public class DefaultCrawler extends AbstractCrawler {
 	
@@ -42,7 +45,7 @@ public class DefaultCrawler extends AbstractCrawler {
 	}
 
 	@Override
-	public Object setCrawlerPolicy(String page, List<String> resultRegexList) {
+	public Object setCrawlerPolicy(String page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -54,12 +57,14 @@ public class DefaultCrawler extends AbstractCrawler {
 	}
 	
 	private class PageGenerator implements Generator {
-		
+		//实现了Generator接口的页面生成器
+		//使用SQLBufferedAddOnlyCollection作为存储访问所有页面的存储结构
+		//使用SQLBufferedQueueCollection最为存储即将访问的页面URL的存储结构
 		public PageGenerator() {
 			// TODO Auto-generated constructor stub
-			urlPool = new URLQueueManager();
+			urlPool = new SQLBufferedQueueCollection();
 			urlPool.add(startURL);
-			urlManager = URLManager.getInstance();
+			urlManager = new SQLBufferedAddOnlyColletion();
 			urlManager.add(startURL);
 			
 		}
@@ -149,7 +154,7 @@ public class DefaultCrawler extends AbstractCrawler {
 			return list;
 		}
 		
-		private URLManager urlManager;
+		private SQLBufferedAddOnlyColletion urlManager;
 		private QueueColleciton urlPool;
 		
 	}
@@ -157,6 +162,7 @@ public class DefaultCrawler extends AbstractCrawler {
 	private String startURL;
 	private String pageRegex;
 	
+	//存储结果对象的数组
 	private List<Object> resultList;
 
 }

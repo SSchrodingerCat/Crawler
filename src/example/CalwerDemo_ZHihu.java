@@ -1,26 +1,43 @@
-package Zhihu;
+package example;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ZhihuCalwer extends DefaultCrawler {
+import Zhihu.DefaultCrawler;
+
+public class CalwerDemo_ZHihu extends DefaultCrawler {
 	
-	public ZhihuCalwer() {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		CalwerDemo_ZHihu crawlerDemo = new CalwerDemo_ZHihu("https://www.zhihu.com/people/chen-lan-xiang-76/answers");
+		crawlerDemo.setPageRegex("UserLink-link.+?href=\"(.+?)\">");
+		List<String> list = new ArrayList<String>();
+		list.add(new String("Icon--company.+?div>(.+?)<"));
+		list.add(new String("(Icon--female)"));
+		list.add(new String("(Icon--male)"));
+		crawlerDemo.setResFilter(list);
+		crawlerDemo.run();
+	}
+	
+	public CalwerDemo_ZHihu() {
 		// TODO Auto-generated constructor stub
 		super();
 		result = Result.getInstance();
 	}
 	
-	public ZhihuCalwer(String start) {
+	public CalwerDemo_ZHihu(String start) {
 		super(start);
 		result = Result.getInstance();
 	}
 	
-	public Result result;
+	public void setResFilter(List<String> filter) {
+		resultRegexList = filter;
+	}
 	
-	public final Object setCrawlerPolicy(String page, List<String> resultRegexList) {
+	public final Object setCrawlerPolicy(String page) {
 		// TODO Auto-generated method stub
 		for (String string : resultRegexList) {
 			Pattern pattern = Pattern.compile(string);
@@ -43,6 +60,10 @@ public class ZhihuCalwer extends DefaultCrawler {
 		System.out.println("职业分布:");
 		System.out.println(this.result.work.toString());
 	}
+	
+	public Result result;
+
+	private List<String> resultRegexList;
 
 }
 
@@ -66,7 +87,7 @@ class Result {
 		if (this.sex.containsKey(sex)) {
 			this.sex.replace(sex, this.sex.get(sex) + 1);
 		} else {
-			this.sex.put(sex, 0);
+			this.sex.put(sex, 1);
 		}
 	}
  	

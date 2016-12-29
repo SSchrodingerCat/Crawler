@@ -1,6 +1,11 @@
 /**
  * adventure
- * create on 2016年12月28日
+ * @time 2016/12/28
+ * 
+ * @description
+ * 		实现了QueueCollection接口的类
+ * 		使用SQL作为缓冲
+ * 		适用于大量数据需要记录的情况
  */
 package util;
 
@@ -8,13 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-/**
- * @author anonymousXY
- *
- */
-public class URLQueueManager implements QueueColleciton {
+public class SQLBufferedQueueCollection implements QueueColleciton {
 
-	public URLQueueManager() {
+	public SQLBufferedQueueCollection() {
 		// TODO Auto-generated constructor stub
 		result = new LinkedList<String>();
 	}
@@ -52,8 +53,12 @@ public class URLQueueManager implements QueueColleciton {
 		return result.isEmpty();
 	}
 	
-	Queue<String> result;
-
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return result.size();
+	}
 	
+	Queue<String> result;
 
 }
