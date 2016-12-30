@@ -10,16 +10,35 @@
 package util;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
+
+import exception.SQLInitFailException;
 
 public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 	
 	public SQLBufferedAddOnlyColletion() {
 		// TODO Auto-generated constructor stub
 		innerSet = new HashSet<>();
+		size = 0;
+		try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.jdbc.Driver");
+
+		      //STEP 3: Open a connection
+		      System.out.println("Connecting to database...");
+		      connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+		      //STEP 4: Execute a query
+		      System.out.println("Creating database...");
+		      pds = connection.createStatement();
+		} catch (ClassNotFoundException | SQLException exception) {
+			//exception.printStackTrace();
+			System.out.println("初始化失败,使用普通缓冲模式");
+		}
 	}
 
 	@Override
@@ -29,15 +48,34 @@ public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 		//	返回值
 		//		true：添加成功
 		//		false：添加失败，有缓存记录
-		if (checkHasURL((String)object))
-			return false;
-		else {
-			if (innerSet.size() < innerSetSize)
-				innerSet.add((String)object);
+		
+		try {
+			
+			if (pds == null || connection == null) throw new SQLInitFailException();
+			
+			if (checkHasURL((String)object))
+				return false;
 			else {
-				innerSet.remove(replacePolicy());
-				innerSet.add((String)object);
-			}
+				if (innerSet.size() < innerSetSize) {
+					innerSet.add((String)object);
+					size += 1;
+					return true;
+				} else {
+					if (!hasEleInSQL()) {
+						String repalceString = replacePolicy();
+						innerSet.remove(repalceString);
+						innerSet.add((String)object);
+						addEleInSQL(repalceString);
+						size += 1;
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}	
+		} catch (SQLInitFailException exception) {
+			//处理数据库初始化失败情况
+			innerSet.add((String)object);
 			return true;
 		}
 	}
@@ -45,11 +83,6 @@ public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 	protected String replacePolicy() {
 		return null;
 		
-	}
-	
-	private Object remove(Object object) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	private boolean checkHasURL(String url) {
@@ -66,7 +99,7 @@ public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 	
 	private boolean hasEleInSQL() {
 		try {
-			ResultSet ret = pds.executeQuery();
+			ResultSet ret = pds.executeQuery("");
 			if (!ret.next())
 				return false;
 			else {
@@ -79,9 +112,9 @@ public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 		}
 	}
 	
-	private void addEleInSQL() {
+	private void addEleInSQL(String element) {
 		try {
-			pds.executeQuery();
+			pds.executeUpdate("");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,16 +141,17 @@ public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 	
 	private HashSet<String> innerSet;
 	private Connection connection;
-	private PreparedStatement pds;
+	private Statement pds;
 	private int innerSetSize;
 	
 	private int size;
 	
 	private static final int DEFAULTSIZE = 1000;
-	public static final String url = "jdbc:mysql://127.0.0.1/student";  
-    public static final String name = "com.mysql.jdbc.Driver";  
-    public static final String user = "root";  
-    public static final String password = "root";
+	public static final String DB_URL = "jdbc:mysql://127.0.0.1/student";  
+    public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+    public static final String USER = "root";
+    public static final String PASS = "root";
     public static final String SQLSTAT = "";
+    public static final String CHECKSTAT = "";
 
 }

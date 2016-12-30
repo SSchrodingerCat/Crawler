@@ -55,7 +55,7 @@ public abstract class AbstractCrawler {
 	//加载页面生成器
 	public void setPageGenerator(Generator generator) {
 		pageGenerator = generator;
-	}	
+	}
 	
 	private Generator pageGenerator;
 
