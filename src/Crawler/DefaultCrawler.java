@@ -140,13 +140,11 @@ public class DefaultCrawler extends AbstractCrawler {
 				tmpUrl = new URL(startURL);
 				String protocol = tmpUrl.getProtocol();
 				String host = tmpUrl.getHost();
-				boolean bool = matcher.find();
-				while (bool) {
+				while (matcher.find()) {
 					String result = matcher.group(1);
 					//String next = "https://" + (new URL(startURL)).getHost() + matcher.group(1) + "/hot";
 					String next = protocol + "://" + host + matcher.group(1) + "/following";
 					list.add(next);
-					bool = matcher.find();
 				}
 			} catch (Exception exception) {
 				exception.printStackTrace();

@@ -75,8 +75,13 @@ public class SQLBufferedAddOnlyColletion implements AddOnlyColletion {
 			}	
 		} catch (SQLInitFailException exception) {
 			//处理数据库初始化失败情况
-			innerSet.add((String)object);
-			return true;
+			if (innerSet.contains((String)object))
+				return false;
+			else {
+				innerSet.add((String)object);
+				return true;
+			}
+			
 		}
 	}
 	
